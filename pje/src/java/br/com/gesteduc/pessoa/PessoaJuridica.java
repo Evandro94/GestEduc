@@ -27,6 +27,7 @@ public abstract class PessoaJuridica extends Pessoa {
     }
 
     public PessoaJuridica(String cnpj, String nome) {
+         super(nome);
         this.cnpj = cnpj;
     }
     

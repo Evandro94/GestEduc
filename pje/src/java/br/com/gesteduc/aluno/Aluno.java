@@ -28,11 +28,7 @@ public class Aluno extends PessoaFisica implements Serializable {
     @Column(nullable = false)
     private int codigoDocente;
 
-    public Aluno(int codigoDocente, String rg, String cpf, Date dataNascinmento, String nome) {
-        super(rg, cpf, dataNascinmento, nome);
-        this.idAluno = idAluno;
-        this.codigoDocente = codigoDocente;
-    }
+    
 
     public Aluno() {
     }
