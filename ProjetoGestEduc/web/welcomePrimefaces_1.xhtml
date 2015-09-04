@@ -1,0 +1,104 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+ 
+<h:head>
+ 
+ 
+</h:head>
+ 
+<h:body>
+ 
+        <div align="center">
+                <h:form id="formPrincipal">
+ 
+ 
+                        <p:dataTable var="lista" value="#{administradorBean}"
+                                id="tabelaPessoas" style="width:70%">
+                                <f:facet name="header">Lista de Pessoas Cadastradas</f:facet>
+ 
+                                <p:column headerText="Nome">
+ 
+                                        <h:outputText value="#{lista.nome}" />
+                                </p:column>
+                                <p:column headerText="Endereco">
+ 
+                                        <h:outputText value="#{lista.endereco}" />
+                                </p:column>
+                                <p:column headerText="Telefone">
+ 
+                                        <h:outputText value="#{lista.telefone}" />
+                                </p:column>
+                                <p:column headerText="Ações">
+                                        <p:commandLink title="Alterar" update=":formAlterar:Alterar"
+                                                oncomplete="dialogAlterar.show()" immediate="true">
+                                                <p:graphicImage value="./imagens/edit_icon.png" />
+                                                <f:setPropertyActionListener target="#{pessoaBean.pessoa}"
+                                                        value="#{lista}" />
+                                        </p:commandLink>
+                                        <p:commandLink title="Excluir" update=":formExcluir:Excluir"
+                                                oncomplete="confirmation.show()" immediate="true">
+                                                <p:graphicImage value="./imagens/del_icon.png" />
+                                                <f:setPropertyActionListener target="#{pessoaBean.pessoa}"
+                                                        value="#{lista}" />
+                                        </p:commandLink>
+                                </p:column>
+ 
+                        </p:dataTable>
+ 
+                        <p:commandButton value="Cadastrar" id="cadastrar"
+                                oncomplete="dialogCadastrar.show()" />
+                </h:form>
+        </div>
+        <h:form id="formAlterar">
+                <p:dialog header="Alterar" widgetVar="dialogAlterar" modal="true"
+                        id="Alterar">
+                        <p:panelGrid id="panelAlterar" columns="2">
+                                <h:outputText value="Nome:" />
+                                <p:inputText value="#{pessoaBean.pessoa.nome}" />
+                                <h:outputText value="Endereco:" />
+                                <p:inputText value="#{pessoaBean.pessoa.endereco}" />
+                                <h:outputText value="Telefone:" />
+                                <p:inputText value="#{pessoaBean.pessoa.telefone}" />
+                        </p:panelGrid>
+                        <p:commandButton value="Alterar"
+                                actionListener="#{pessoaBean.alterar}"
+                                update=":formPrincipal:tabelaPessoas"
+                                oncomplete="dialogAlterar.hide()" />
+                </p:dialog>
+        </h:form>
+ 
+        <h:form id="formCadastrar">
+                <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
+                        <p:panelGrid id="panelCadastrar" columns="2">
+                                <h:outputText value="Nome:" />
+                                <p:inputText value="#{pessoaBean.pessoa.nome}" />
+                                <h:outputText value="Endereco:" />
+                                <p:inputText value="#{pessoaBean.pessoa.endereco}" />
+                                <h:outputText value="Telefone:" />
+                                <p:inputText value="#{pessoaBean.pessoa.telefone}" />
+                        </p:panelGrid>
+                        <p:commandButton value="Cadastrar"
+                                actionListener="#{pessoaBean.cadastrar}"
+                                update=":formPrincipal:tabelaPessoas"
+                                oncomplete="dialogCadastrar.hide()" />
+                </p:dialog>
+        </h:form>
+        <h:form id="formExcluir">
+                <p:confirmDialog id="Excluir"
+                        message="Você gostaria de Deletar o #{pessoaBean.pessoa.nome}?"
+                        header="Excluir" severity="alert" widgetVar="confirmation">
+ 
+                        <p:commandButton id="confirm" value="Sim"
+                                oncomplete="confirmation.hide()"
+                                actionListener="#{pessoaBean.excluir}"
+                                update=":formPrincipal:tabelaPessoas" />
+                        <p:commandButton id="decline" value="Não"
+                                onclick="confirmation.hide()" type="button" />
+ 
+                </p:confirmDialog>
+        </h:form>
+ 
+</h:body>
+</html>
